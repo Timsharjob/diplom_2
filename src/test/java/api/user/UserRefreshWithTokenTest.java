@@ -46,14 +46,14 @@ public class UserRefreshWithTokenTest {
     @After
     public void cleanUp() {
         if (token != null) {
-            authClient.delete(token);
+            authClient.deleteUser(token);
         }
     }
 
     @DisplayName("Изменение пользователя с авторизацией")
     @Test
     public void refreshUserWithTokenTest() {
-        ValidatableResponse registerResponse = authClient.create(AuthGenerator.getRegisterDefault());
+        ValidatableResponse registerResponse = authClient.createUser(AuthGenerator.getRegisterDefault());
         token = registerResponse.extract().body().path("accessToken");
         ValidatableResponse refreshUserResponse = authClient.refreshUserWithToken(auth, token);
         Assert.assertEquals(statusCode, refreshUserResponse.extract().statusCode());

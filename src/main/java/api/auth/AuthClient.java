@@ -9,10 +9,10 @@ import static io.restassured.RestAssured.given;
 public class AuthClient extends Client {
     private static final String PATH_REGISTER = "api/auth/register";
     private static final String PATH_USER = "api/auth/user";
-    private static final String PATH_LOGIN = "api/auth/login";
+    private static final String PATH_LOGIN = "api/auth/loginUser";
 
     @Step
-    public ValidatableResponse create(Auth auth) {
+    public ValidatableResponse createUser(Auth auth) {
         return given()
                 .spec(getSpec())
                 .body(auth)
@@ -22,7 +22,7 @@ public class AuthClient extends Client {
     }
 
     @Step
-    public ValidatableResponse delete(String token) {
+    public ValidatableResponse deleteUser(String token) {
         return given()
                 .spec(getSpec())
                 .header("Authorization", token)
@@ -32,7 +32,7 @@ public class AuthClient extends Client {
     }
 
     @Step
-    public ValidatableResponse login(Auth auth) {
+    public ValidatableResponse loginUser(Auth auth) {
         return given()
                 .spec(getSpec())
                 .body(auth)

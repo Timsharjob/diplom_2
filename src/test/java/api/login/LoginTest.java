@@ -47,16 +47,16 @@ public class LoginTest {
     @After
     public void cleanUp() {
         if (token != null) {
-            authClient.delete(token);
+            authClient.deleteUser(token);
         }
     }
 
     @DisplayName("Авторизация пользователя")
     @Test
     public void loginTest() {
-        ValidatableResponse registerResponse = authClient.create(AuthGenerator.getRegisterDefault());
+        ValidatableResponse registerResponse = authClient.createUser(AuthGenerator.getRegisterDefault());
         token = registerResponse.extract().body().path("accessToken");
-        ValidatableResponse loginResponse = authClient.login(auth);
+        ValidatableResponse loginResponse = authClient.loginUser(auth);
         Assert.assertEquals(statusCode, loginResponse.extract().statusCode());
         Assert.assertEquals(isSuccess, loginResponse.extract().body().path("success"));
     }

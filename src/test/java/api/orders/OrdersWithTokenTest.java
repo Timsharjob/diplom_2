@@ -47,14 +47,14 @@ public class OrdersWithTokenTest {
     @After
     public void cleanUp() {
         if (token != null) {
-            authClient.delete(token);
+            authClient.deleteUser(token);
         }
     }
 
     @DisplayName("Создание заказа с авторизацией")
     @Test
     public void createOrdersWithTokenTest() {
-        ValidatableResponse registerResponse = authClient.create(AuthGenerator.getRegisterDefault());
+        ValidatableResponse registerResponse = authClient.createUser(AuthGenerator.getRegisterDefault());
         token = registerResponse.extract().body().path("accessToken");
         ValidatableResponse createOrdersResponse = ordersClient.createWithToken(orders, token);
         Assert.assertEquals(statusCode, createOrdersResponse.extract().statusCode());

@@ -47,14 +47,14 @@ public class RegisterTest {
     @After
     public void cleanUp() {
         if (token != null) {
-            authClient.delete(token);
+            authClient.deleteUser(token);
         }
     }
 
     @DisplayName("Регистрация пользователя")
     @Test
     public void registerUserTest() {
-        ValidatableResponse registerResponse = authClient.create(auth);
+        ValidatableResponse registerResponse = authClient.createUser(auth);
         token = registerResponse.extract().body().path("accessToken");
         Assert.assertEquals(statusCode, registerResponse.extract().statusCode());
         Assert.assertEquals(isSuccess, registerResponse.extract().body().path("success"));

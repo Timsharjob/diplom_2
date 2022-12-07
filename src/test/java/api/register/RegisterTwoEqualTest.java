@@ -24,16 +24,16 @@ public class RegisterTwoEqualTest {
     @After
     public void cleanUp() {
         if (token != null) {
-            authClient.delete(token);
+            authClient.deleteUser(token);
         }
     }
 
     @DisplayName("Регистрация двух одинаковых пользователей")
     @Test
     public void registerTwoEqualUserTest() {
-        ValidatableResponse registerResponse = authClient.create(AuthGenerator.getRegisterDefault());
+        ValidatableResponse registerResponse = authClient.createUser(AuthGenerator.getRegisterDefault());
         token = registerResponse.extract().body().path("accessToken");
-        ValidatableResponse registerResponse2 = authClient.create(AuthGenerator.getRegisterDefault());
+        ValidatableResponse registerResponse2 = authClient.createUser(AuthGenerator.getRegisterDefault());
         Assert.assertEquals(SC_FORBIDDEN, registerResponse2.extract().statusCode());
         Assert.assertEquals(false, registerResponse2.extract().body().path("success"));
     }

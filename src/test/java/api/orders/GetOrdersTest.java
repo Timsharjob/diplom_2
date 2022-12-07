@@ -26,14 +26,14 @@ public class GetOrdersTest {
     @After
     public void cleanUp() {
         if (token != null) {
-            authClient.delete(token);
+            authClient.deleteUser(token);
         }
     }
 
     @DisplayName("Получение заказов пользователя с авторизацией")
     @Test
     public void getOrdersWithTokenTest() {
-        ValidatableResponse registerResponse = authClient.create(AuthGenerator.getRegisterDefault());
+        ValidatableResponse registerResponse = authClient.createUser(AuthGenerator.getRegisterDefault());
         token = registerResponse.extract().body().path("accessToken");
         ValidatableResponse getOrdersResponse = ordersClient.getOrdersWithToken(token);
         Assert.assertEquals(SC_OK, getOrdersResponse.extract().statusCode());
